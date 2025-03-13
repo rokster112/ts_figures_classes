@@ -8,7 +8,7 @@ export interface Figure {
 export class Triangle implements Figure {
   public shape: 'triangle';
   constructor(
-    public color,
+    public color: 'red' | 'green' | 'blue',
     public a: number,
     public b: number,
     public c: number,
@@ -18,7 +18,7 @@ export class Triangle implements Figure {
       throw new Error('One of length properties is less than 1');
     } else if (a + b <= c || b + c <= a || c + a <= b) {
       throw new Error(
-        'One property is euqal to or bigger than the sum of remaining properties',
+        'One property is equal to or bigger than the sum of remaining properties',
       );
     }
   }
@@ -26,14 +26,14 @@ export class Triangle implements Figure {
     const s = (this.a + this.b + this.c) / 2;
     const area = Math.sqrt(s * (s - this.a) * (s - this.b) * (s - this.c));
 
-    return parseFloat(area.toFixed(2));
+    return Math.floor(area * 100) / 100;
   }
 }
 
 export class Circle implements Figure {
   public shape: 'circle';
   constructor(
-    public color,
+    public color: 'red' | 'green' | 'blue',
     public radius: number,
   ) {
     this.shape = 'circle';
@@ -50,7 +50,7 @@ export class Circle implements Figure {
 export class Rectangle implements Figure {
   public shape: 'rectangle';
   constructor(
-    public color,
+    public color: 'red' | 'green' | 'blue',
     public width: number,
     public height: number,
   ) {
@@ -60,26 +60,10 @@ export class Rectangle implements Figure {
     }
   }
   getArea(): number {
-    return parseFloat((this.width * this.height).toFixed(2));
+    const area = this.width * this.height;
+    return Math.floor(area * 100) / 100;
   }
 }
-
-// We have 3 types of figures: triangles, circles and rectangles.
-
-// Write an interface Figure and 3 classes implementing it so that every figure has:
-
-// a shape (triangle, circle or rectangle);
-// a color (red, green or blue);
-// a method getArea that returns the area of the figure rounded down to hundredths.
-// In addition to a color constructors should accept required data:
-
-//! 1. Sides a, b and c for a triangle;
-//! 2. A radius for a circle;
-//! 3. A width and a height for a rectangle.
-// The constructors should throw new Error('your error message') if:
-
-// any length is <= 0
-// the longest side of a triangle is >= than a sum of two others
 
 export function getInfo(figure): string {
   return `A ${figure.color} ${figure.shape} - ${figure.getArea()}`;
